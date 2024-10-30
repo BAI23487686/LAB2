@@ -1,0 +1,8 @@
+module running_light (
+input wire clk, // 输入时钟信号 (50 MHz)
+input wire reset, // 重置信号 output reg [3:0] LED // 输出 LED 状态);
+
+// 定义常量 parameter COUNT_MAX =25000000; //0.5 秒的计数值 (50 MHz 时钟)
+reg [25:0] counter; // 用于创建延迟的计数器 reg [1:0] current_led; // 当前 LED 指示器 // 主时钟逻辑 always @(posedge clk or posedge reset) begin if (reset) begin counter <=0;
+current_led <=0;
+LED <=4'b0001; // 初始状态点亮 LED0 end else begin if (counter < COUNT_MAX -1) begin counter <= counter +1; // 增加计数 end else begin counter <=0; //计数器重置 LED <= {LED[2:0], LED[3]}; // 左移循环 end end endendmodule
